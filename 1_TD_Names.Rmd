@@ -1,0 +1,75 @@
+---
+title: "French given names per year per department"
+author: "Lucas Mello Schnorr, Jean-Marc Vincent"
+date: "October, 2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Using the [given names data
+set of INSEE](https://www.insee.fr/fr/statistiques/fichier/2540004/dpt2017_txt.zip), answer some of the following questions:
+
+- First name frequency evolves along time?
+- What can we say about "the french version of your name here" (for each state, all the country)?
+- Is there some sort of geographical correlation with the data?
+- Which state has a larger variety of names along time?
+- _your own question_ (be creative)
+
+You need to use the _dplyr_ and _magrittr_ for this analysis. Read in R with this code. Note that you might need to install the `readr` package with the appropriate command.
+
+```{r}
+file = "dpt2017_txt.zip"
+if(!file.exists(file)){
+  download.file("https://www.insee.fr/fr/statistiques/fichier/2540004/dpt2017_txt.zip",
+	destfile=file)
+}
+unzip(file)
+```
+
+```{r}
+library(readr);
+df <- read_tsv("dpt2017.txt", locale = locale(encoding = "ISO-8859-1"), col_types=cols(
+  sexe = col_integer(),
+  preusuel = col_character(),
+  annais = col_character(),
+  dpt = col_character(),
+  nombre = col_integer()
+));
+df;
+```
+
+Finding the occurencies of my name 'Jean' by each year and plotting it to a line graph.
+
+```{r}
+  library(tidyverse)
+  library(ggplot2)
+  df_jean <- df %>% filter(preusuel == 'JEAN') %>% group_by(annais) %>% summarise(quant = sum(nombre))
+  
+  df_jean <-  df_jean  %>% mutate(annais=as.integer(annais))
+  
+  head(df_jean)
+  
+  ggplot(df_jean, aes( x=annais, y =quant))+geom_line()
+```
+
+Finding the distribution of sexes.
+
+```{r}
+  library(tidyverse)
+  sex_df <- df %>% group_by(annais) %>% group_by(sexe) %>% summarise(quant = sum(nombre))
+  sex_df
+```
+
+Visualizing the distribution of the observations between the dpt's.
+
+```{r}
+  library(tidyverse)
+  name_df <- df %>% group_by(dpt) %>%  summarise(quant = sum(nombre))
+  #name_df
+  name_df <- name_df %>% mutate(dpt=as.integer(dpt))
+  ggplot(name_df, aes( x=dpt, y =quant))+geom_point() + coord_cartesian(xlim=c(0,100))
+```
+
