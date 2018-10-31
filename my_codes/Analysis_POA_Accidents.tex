@@ -1,0 +1,442 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Handson analysis on the POA accidents dataset},
+            pdfauthor={Joao Pedro Oliveira},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Handson analysis on the POA accidents dataset}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Joao Pedro Oliveira}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{31 de outubro de 2018}
+
+
+\begin{document}
+\maketitle
+
+\section{This is my hands on analysis of the POA accidents
+dataset.}\label{this-is-my-hands-on-analysis-of-the-poa-accidents-dataset.}
+
+\paragraph{First download the dataset}\label{first-download-the-dataset}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file =}\StringTok{ "acidentes-2016.csv"}
+\ControlFlowTok{if}\NormalTok{(}\OperatorTok{!}\KeywordTok{file.exists}\NormalTok{(file))\{}
+  \KeywordTok{download.file}\NormalTok{(}\StringTok{"http://datapoa.com.br/storage/f/2017-08-03T13%3A19%3A45.538Z/acidentes-2016.csv"}\NormalTok{, }\DataTypeTok{destfile=}\NormalTok{file)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{Now, read the CSV file to a Dataframe using
+readr}\label{now-read-the-csv-file-to-a-dataframe-using-readr}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(readr)}
+\NormalTok{ac_data <-}\StringTok{ }\KeywordTok{read_delim}\NormalTok{(file, }\StringTok{";"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   .default = col_integer(),
+##   LONGITUDE = col_double(),
+##   LATITUDE = col_double(),
+##   LOG1 = col_character(),
+##   LOG2 = col_character(),
+##   LOCAL = col_character(),
+##   TIPO_ACID = col_character(),
+##   LOCAL_VIA = col_character(),
+##   DATA = col_date(format = ""),
+##   DATA_HORA = col_datetime(format = ""),
+##   DIA_SEM = col_character(),
+##   HORA = col_time(format = ""),
+##   TEMPO = col_character(),
+##   NOITE_DIA = col_character(),
+##   FONTE = col_character(),
+##   BOLETIM = col_character(),
+##   REGIAO = col_character(),
+##   CONSORCIO = col_character()
+## )
+\end{verbatim}
+
+\begin{verbatim}
+## See spec(...) for full column specifications.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ac_data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 12,515 x 44
+##        ID LONGITUDE LATITUDE LOG1  LOG2  PREDIAL1 LOCAL TIPO_ACID LOCAL_VIA
+##     <int>     <dbl>    <dbl> <chr> <chr>    <int> <chr> <chr>     <chr>    
+##  1 623243     -51.2    -30.1 R AR~ R CO~        0 Cruz~ ATROPELA~ R ARAPEI~
+##  2 622413     -51.2    -30.1 R PA~ R JO~        0 Cruz~ ABALROAM~ R PADRE ~
+##  3 622460     -51.2    -30.0 AV D~ <NA>         0 Logr~ ATROPELA~ AV DO LA~
+##  4 622540     -51.2    -30.0 AV D~ R CA~        0 Cruz~ CHOQUE    AV DR NI~
+##  5 622181     -51.1    -30.1 ESTR~ <NA>      8487 Logr~ CHOQUE    8487 EST~
+##  6 622232     -51.2    -30.0 AV I~ <NA>       320 Logr~ COLISAO   320 AV I~
+##  7 622414     -51.2    -30.1 R JO~ <NA>       965 Logr~ COLISAO   965 R JO~
+##  8 622186     -51.2    -30.0 AV E~ <NA>       240 Logr~ ABALROAM~ 240 AV E~
+##  9 622235     -51.2    -30.0 R GE~ <NA>      1445 Logr~ COLISAO   1445 R G~
+## 10 622185     -51.2    -30.0 AV E~ <NA>         0 Logr~ QUEDA     AV EDVAL~
+## # ... with 12,505 more rows, and 35 more variables: QUEDA_ARR <int>,
+## #   DATA <date>, DATA_HORA <dttm>, DIA_SEM <chr>, HORA <time>,
+## #   FERIDOS <int>, FERIDOS_GR <int>, MORTES <int>, MORTE_POST <int>,
+## #   FATAIS <int>, AUTO <int>, TAXI <int>, LOTACAO <int>, ONIBUS_URB <int>,
+## #   ONIBUS_MET <int>, ONIBUS_INT <int>, CAMINHAO <int>, MOTO <int>,
+## #   CARROCA <int>, BICICLETA <int>, OUTRO <int>, TEMPO <chr>,
+## #   NOITE_DIA <chr>, FONTE <chr>, BOLETIM <chr>, REGIAO <chr>, DIA <int>,
+## #   MES <int>, ANO <int>, FX_HORA <int>, CONT_ACID <int>, CONT_VIT <int>,
+## #   UPS <int>, CONSORCIO <chr>, CORREDOR <int>
+\end{verbatim}
+
+\paragraph{We need to get a grasp for what is in our
+dataset}\label{we-need-to-get-a-grasp-for-what-is-in-our-dataset}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(ac_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        ID           LONGITUDE         LATITUDE             LOG1          
+##  Min.   :622181   Min.   :-51.27   Min.   :-29999977   Length:12515      
+##  1st Qu.:625918   1st Qu.:-51.22   1st Qu.:      -30   Class :character  
+##  Median :629367   Median :-51.19   Median :      -30   Mode  :character  
+##  Mean   :629344   Mean   :-51.17   Mean   : -3012386                     
+##  3rd Qu.:632774   3rd Qu.:-51.16   3rd Qu.:      -30                     
+##  Max.   :637678   Max.   :-30.05   Max.   :      -30                     
+##                                                                          
+##      LOG2              PREDIAL1        LOCAL            TIPO_ACID        
+##  Length:12515       Min.   :    0   Length:12515       Length:12515      
+##  Class :character   1st Qu.:    0   Class :character   Class :character  
+##  Mode  :character   Median :  391   Mode  :character   Mode  :character  
+##                     Mean   : 1267                                        
+##                     3rd Qu.: 1563                                        
+##                     Max.   :15555                                        
+##                                                                          
+##   LOCAL_VIA           QUEDA_ARR              DATA           
+##  Length:12515       Min.   :0.0000000   Min.   :2016-01-01  
+##  Class :character   1st Qu.:0.0000000   1st Qu.:2016-04-04  
+##  Mode  :character   Median :0.0000000   Median :2016-06-30  
+##                     Mean   :0.0001598   Mean   :2016-07-01  
+##                     3rd Qu.:0.0000000   3rd Qu.:2016-09-30  
+##                     Max.   :1.0000000   Max.   :2016-12-31  
+##                                                             
+##    DATA_HORA                     DIA_SEM              HORA         
+##  Min.   :2016-01-01 05:45:00   Length:12515       Length:12515     
+##  1st Qu.:2016-04-04 17:27:30   Class :character   Class1:hms       
+##  Median :2016-06-30 13:30:00   Mode  :character   Class2:difftime  
+##  Mean   :2016-07-02 08:12:41                      Mode  :numeric   
+##  3rd Qu.:2016-09-30 13:35:30                                       
+##  Max.   :2016-12-31 21:13:00                                       
+##                                                                    
+##     FERIDOS         FERIDOS_GR          MORTES           MORTE_POST      
+##  Min.   :0.0000   Min.   :0.00000   Min.   :0.000000   Min.   :0.000000  
+##  1st Qu.:0.0000   1st Qu.:0.00000   1st Qu.:0.000000   1st Qu.:0.000000  
+##  Median :0.0000   Median :0.00000   Median :0.000000   Median :0.000000  
+##  Mean   :0.4048   Mean   :0.03052   Mean   :0.003756   Mean   :0.003596  
+##  3rd Qu.:1.0000   3rd Qu.:0.00000   3rd Qu.:0.000000   3rd Qu.:0.000000  
+##  Max.   :9.0000   Max.   :2.00000   Max.   :2.000000   Max.   :1.000000  
+##                                                                          
+##      FATAIS              AUTO            TAXI            LOTACAO       
+##  Min.   :0.000000   Min.   :0.000   Min.   :0.00000   Min.   :0.00000  
+##  1st Qu.:0.000000   1st Qu.:1.000   1st Qu.:0.00000   1st Qu.:0.00000  
+##  Median :0.000000   Median :1.000   Median :0.00000   Median :0.00000  
+##  Mean   :0.007351   Mean   :1.399   Mean   :0.09061   Mean   :0.02197  
+##  3rd Qu.:0.000000   3rd Qu.:2.000   3rd Qu.:0.00000   3rd Qu.:0.00000  
+##  Max.   :2.000000   Max.   :7.000   Max.   :4.00000   Max.   :2.00000  
+##                                                                        
+##    ONIBUS_URB       ONIBUS_MET        ONIBUS_INT          CAMINHAO     
+##  Min.   :0.0000   Min.   :0.00000   Min.   :0.000000   Min.   :0.0000  
+##  1st Qu.:0.0000   1st Qu.:0.00000   1st Qu.:0.000000   1st Qu.:0.0000  
+##  Median :0.0000   Median :0.00000   Median :0.000000   Median :0.0000  
+##  Mean   :0.0628   Mean   :0.01231   Mean   :0.009109   Mean   :0.1134  
+##  3rd Qu.:0.0000   3rd Qu.:0.00000   3rd Qu.:0.000000   3rd Qu.:0.0000  
+##  Max.   :3.0000   Max.   :2.00000   Max.   :2.000000   Max.   :2.0000  
+##                                                                        
+##       MOTO           CARROCA    BICICLETA           OUTRO         
+##  Min.   :0.0000   Min.   :0   Min.   :0.00000   Min.   :0.000000  
+##  1st Qu.:0.0000   1st Qu.:0   1st Qu.:0.00000   1st Qu.:0.000000  
+##  Median :0.0000   Median :0   Median :0.00000   Median :0.000000  
+##  Mean   :0.2363   Mean   :0   Mean   :0.01159   Mean   :0.003196  
+##  3rd Qu.:0.0000   3rd Qu.:0   3rd Qu.:0.00000   3rd Qu.:0.000000  
+##  Max.   :2.0000   Max.   :0   Max.   :2.00000   Max.   :1.000000  
+##                                                                   
+##     TEMPO            NOITE_DIA            FONTE          
+##  Length:12515       Length:12515       Length:12515      
+##  Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character  
+##                                                          
+##                                                          
+##                                                          
+##                                                          
+##    BOLETIM             REGIAO               DIA             MES        
+##  Length:12515       Length:12515       Min.   : 1.00   Min.   : 1.000  
+##  Class :character   Class :character   1st Qu.: 8.00   1st Qu.: 4.000  
+##  Mode  :character   Mode  :character   Median :16.00   Median : 6.000  
+##                                        Mean   :15.69   Mean   : 6.526  
+##                                        3rd Qu.:23.00   3rd Qu.: 9.000  
+##                                        Max.   :31.00   Max.   :12.000  
+##                                                                        
+##       ANO          FX_HORA        CONT_ACID    CONT_VIT     
+##  Min.   :2016   Min.   : 0.00   Min.   :1   Min.   :0.0000  
+##  1st Qu.:2016   1st Qu.: 9.00   1st Qu.:1   1st Qu.:0.0000  
+##  Median :2016   Median :13.00   Median :1   Median :0.0000  
+##  Mean   :2016   Mean   :12.81   Mean   :1   Mean   :0.3394  
+##  3rd Qu.:2016   3rd Qu.:16.00   3rd Qu.:1   3rd Qu.:1.0000  
+##  Max.   :2016   Max.   :23.00   Max.   :1   Max.   :1.0000  
+##                 NA's   :3                                   
+##       UPS          CONSORCIO            CORREDOR       
+##  Min.   : 1.000   Length:12515       Min.   :0.000000  
+##  1st Qu.: 1.000   Class :character   1st Qu.:0.000000  
+##  Median : 1.000   Mode  :character   Median :0.000000  
+##  Mean   : 2.414                      Mean   :0.001039  
+##  3rd Qu.: 5.000                      3rd Qu.:0.000000  
+##  Max.   :13.000                      Max.   :1.000000  
+## 
+\end{verbatim}
+
+\paragraph{As we see, there is a lot of information here.To work with
+this data we need to do some
+cleaning.}\label{as-we-see-there-is-a-lot-of-information-here.to-work-with-this-data-we-need-to-do-some-cleaning.}
+
+Since for this first analysis we'll be trying to find out if there is a
+time of the year with more accidents, we'll limit this dataset for this
+pourpose.
+
+Here we group our data by date and summarise it to a dataframe with only
+two columns. Then, we plot it to see the number of occurences by date.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ac_data }\OperatorTok{%>%}\StringTok{  }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(DATA) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{QUANT_ACID =} \KeywordTok{sum}\NormalTok{(CONT_ACID)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{( }\DataTypeTok{x=}\NormalTok{DATA, }\DataTypeTok{y =}\NormalTok{QUANT_ACID))}\OperatorTok{+}\KeywordTok{geom_line}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Analysis_POA_Accidents_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ac_data }\OperatorTok{%>%}\StringTok{  }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(DATA) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{QUANT_ACID =} \KeywordTok{sum}\NormalTok{(CONT_ACID)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{( }\DataTypeTok{x=}\NormalTok{DATA, }\DataTypeTok{y =}\NormalTok{QUANT_ACID))}\OperatorTok{+}\KeywordTok{geom_col}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Analysis_POA_Accidents_files/figure-latex/unnamed-chunk-5-1.pdf}
+\#\#\#\#As we can see, there seems to be no correlation between the time
+of the year and the accidents.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ac_data }\OperatorTok{%>%}\StringTok{  }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(MES) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{QUANT_ACID =} \KeywordTok{sum}\NormalTok{(CONT_ACID)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{( }\DataTypeTok{x=}\NormalTok{MES, }\DataTypeTok{y =}\NormalTok{QUANT_ACID))}\OperatorTok{+}\KeywordTok{geom_col}\NormalTok{(}\DataTypeTok{count=}\DecValTok{12}\NormalTok{,}\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Ignoring unknown parameters: count, binwidth
+\end{verbatim}
+
+\includegraphics{Analysis_POA_Accidents_files/figure-latex/unnamed-chunk-6-1.pdf}
+\#\#\#\# Now, let's analyse to learn how many vehicles are usually
+involved in the accidents.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ac_data }\OperatorTok{%>%}\StringTok{  }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(AUTO) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{QUANT_ACID =} \KeywordTok{sum}\NormalTok{(CONT_ACID)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{( }\DataTypeTok{x=}\NormalTok{AUTO, }\DataTypeTok{y =}\NormalTok{QUANT_ACID))}\OperatorTok{+}\KeywordTok{geom_col}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Analysis_POA_Accidents_files/figure-latex/unnamed-chunk-7-1.pdf}
+\#\#\#\#So we can see from here that most accidents happen envolving 1
+or 2 vehicles.
+
+\paragraph{Now let's see if there is a certain weekday that has more
+accidents than
+others}\label{now-lets-see-if-there-is-a-certain-weekday-that-has-more-accidents-than-others}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ac_data }\OperatorTok{%>%}\StringTok{  }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(DIA_SEM) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{QUANT_ACID =} \KeywordTok{sum}\NormalTok{(CONT_ACID)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{( }\DataTypeTok{x=}\NormalTok{DIA_SEM, }\DataTypeTok{y=}\NormalTok{QUANT_ACID))}\OperatorTok{+}\KeywordTok{geom_col}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Analysis_POA_Accidents_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\paragraph{From this graph we can certainly observe some interesting
+things. The first thing that comes to mind is that there are more
+accidents on Fridays, usually when people go out to party. And the
+number of accidents on Saturdays and Sundays are low, maybe because
+people tend to stay at home during those
+days.}\label{from-this-graph-we-can-certainly-observe-some-interesting-things.-the-first-thing-that-comes-to-mind-is-that-there-are-more-accidents-on-fridays-usually-when-people-go-out-to-party.-and-the-number-of-accidents-on-saturdays-and-sundays-are-low-maybe-because-people-tend-to-stay-at-home-during-those-days.}
+
+\paragraph{\texorpdfstring{So, lets see if there are regions in Porto
+Alegre with more accidents than others. For this, I define ``Region'' as
+the column
+`REGIAO'.}{So, lets see if there are regions in Porto Alegre with more accidents than others. For this, I define Region as the column REGIAO.}}\label{so-lets-see-if-there-are-regions-in-porto-alegre-with-more-accidents-than-others.-for-this-i-define-region-as-the-column-regiao.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ac_data }\OperatorTok{%>%}\StringTok{  }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(REGIAO) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{QUANT_ACID =} \KeywordTok{sum}\NormalTok{(CONT_ACID)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{( }\DataTypeTok{x=}\NormalTok{REGIAO, }\DataTypeTok{y=}\NormalTok{QUANT_ACID))}\OperatorTok{+}\KeywordTok{geom_col}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Analysis_POA_Accidents_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\paragraph{Now, this seems to be good enough. One thing i'm concerned,
+though,it's to see the percentages of the total accidents by region.
+This might be more
+interesting.}\label{now-this-seems-to-be-good-enough.-one-thing-im-concerned-thoughits-to-see-the-percentages-of-the-total-accidents-by-region.-this-might-be-more-interesting.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ac_data }\OperatorTok{%>%}\StringTok{  }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(REGIAO) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{PERCNT_ACID =} \KeywordTok{sum}\NormalTok{(CONT_ACID)}\OperatorTok{/}\KeywordTok{nrow}\NormalTok{(ac_data) }\OperatorTok{*}\StringTok{ }\DecValTok{100}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{( }\DataTypeTok{x=}\NormalTok{REGIAO, }\DataTypeTok{y=}\NormalTok{PERCNT_ACID))}\OperatorTok{+}\KeywordTok{geom_col}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Analysis_POA_Accidents_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+
+\end{document}

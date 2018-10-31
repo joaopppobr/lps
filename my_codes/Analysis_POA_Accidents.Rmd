@@ -1,15 +1,15 @@
 ---
 title: "Handson analysis on the POA accidents dataset"
 author: "Joao Pedro Oliveira"
-date: "31 de outubro de 2018"
+date: "October 31 2018"
 output:
-  pdf_document: default
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+#knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
@@ -35,7 +35,7 @@ ac_data
 summary(ac_data)
 ```
 
-####As we see, there is a lot of information here.To work with this data we need to do some cleaning.
+###As we see, there is a lot of information here.To work with this data we need to do some cleaning.
 
 Since for this first analysis we'll be trying to find out if there is a time of the year with more accidents, we'll limit this dataset for this pourpose.
 
@@ -53,7 +53,8 @@ ac_data %>%
   summarise(QUANT_ACID = sum(CONT_ACID)) %>%
   ggplot(aes( x=DATA, y =QUANT_ACID))+geom_col()
 ```
-####As we can see, there seems to be no correlation between the time of the year and the accidents.
+
+###As we can see, there seems to be no correlation between the time of the year and the accidents.
 
 ```{r}
 ac_data %>%  
@@ -61,17 +62,19 @@ ac_data %>%
   summarise(QUANT_ACID = sum(CONT_ACID)) %>%
   ggplot(aes( x=MES, y =QUANT_ACID))+geom_col(count=12,binwidth = 1)
 ```
+
 #### Now, let's analyse to learn how many vehicles are usually involved in the accidents.
 
 ```{r}
 ac_data %>%  
   group_by(AUTO) %>% 
   summarise(QUANT_ACID = sum(CONT_ACID)) %>%
-  ggplot(aes( x=AUTO, y =QUANT_ACID))+geom_col()
+  ggplot(aes( x=AUTO, y =QUANT_ACID))+geom_col()+theme_minimal()
 ```
-####So we can see from here that most accidents happen envolving 1 or 2 vehicles.
 
-####Now let's see if there is a certain weekday that has more accidents than others
+###So we can see from here that most accidents happen envolving 1 or 2 vehicles.
+
+###Now let's see if there is a certain weekday that has more accidents than others
 
 ```{r}
 ac_data %>%  
