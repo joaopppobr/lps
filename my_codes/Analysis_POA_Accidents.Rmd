@@ -47,9 +47,20 @@ ac_data %>%
   summarise(QUANT_ACID = sum(CONT_ACID)) %>%
   ggplot(aes( x=DATA, y =QUANT_ACID))+geom_line() + geom_point()
 ```
-
+```{r}
+ac_data %>%  
+  group_by(DATA) %>% 
+  summarise(QUANT_ACID = sum(CONT_ACID)) %>%
+  ggplot(aes( x=DATA, y =QUANT_ACID))+geom_col()
+```
 ####As we can see, there seems to be no correlation between the time of the year and the accidents.
 
+```{r}
+ac_data %>%  
+  group_by(MES) %>% 
+  summarise(QUANT_ACID = sum(CONT_ACID)) %>%
+  ggplot(aes( x=MES, y =QUANT_ACID))+geom_col(count=12,binwidth = 1)
+```
 #### Now, let's analyse to learn how many vehicles are usually involved in the accidents.
 
 ```{r}
@@ -88,4 +99,3 @@ ac_data %>%
   summarise(PERCNT_ACID = sum(CONT_ACID)/nrow(ac_data) * 100) %>% 
   ggplot(aes( x=REGIAO, y=PERCNT_ACID))+geom_col()
 ```
-
