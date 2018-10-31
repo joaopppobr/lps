@@ -23,6 +23,9 @@
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="img/88x31.png" /></a>
 #+end_html
 
+** Note:
+   This is the content from my classes for this course. My codes can be found at the 'my_codes' folder, as well as any other work I developed trough this course.
+
 ** Goal
 
 The aim of this short 15-hour course is to present the fundamental
