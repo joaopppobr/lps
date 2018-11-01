@@ -27,3 +27,5 @@ knitr::opts_chunk$set(echo = TRUE)
 #### For this plot to be useful, in my opinion, the methods that you used to gather and classify the data must be really clear. 
 
 #### Other than that, I think the design of the plot is really good, and it really carries the message that the newspaper is trying to convey. Some color choices might have been on pourpose, like the white color for the democratic governments since those were not the focus of the message, and that might be a point for discussion, but that's just fine for me.
+
+#### For more reference, the plot can be found in [this arcticle](https://www.bloomberg.com/graphics/2018-global-economy-ten-years-after-lehman/)
