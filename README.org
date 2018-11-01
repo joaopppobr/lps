@@ -24,7 +24,7 @@
 #+end_html
 
 ** Note:
-   This is the content from my classes for this course. My codes can be found at the 'my_codes' folder, as well as any other work I developed troughout this course. For the original repository go to https://github.com/schnorr/lps
+   This is the content from my classes for this course. My codes can be found at the 'my_labbooks' folder, as well as any other work I developed troughout this course. For the original repository go to https://github.com/schnorr/lps
 
 ** Goal
 
