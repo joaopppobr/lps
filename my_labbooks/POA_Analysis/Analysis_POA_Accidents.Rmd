@@ -11,11 +11,12 @@ output:
 ```{r setup, include=FALSE}
 #knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(scales)
 ```
 
-#This is my hands on analysis of the POA accidents dataset.
+###This is my hands on analysis of the POA accidents dataset
 
-####First download the dataset
+First, download the dataset
 ```{r}
 file = "acidentes-2016.csv"
 if(!file.exists(file)){
@@ -23,44 +24,41 @@ if(!file.exists(file)){
 }
 ```
 
-#### Now, read the CSV file to a Dataframe using readr
+Now, read the CSV file to a Dataframe using readr
 ```{r}
 library(readr)
+library(RColorBrewer)
 ac_data <- read_delim(file, ";")
 ac_data
 ```
 
-#### We need to get a grasp for what is in our dataset
-```{r}
-summary(ac_data)
-```
-
-###As we see, there is a lot of information here.To work with this data we need to do some cleaning.
+####As we see, there is a lot of information here.Though at my first look, I can't seem to find any relevant missing data.
 
 Since for this first analysis we'll be trying to find out if there is a time of the year with more accidents, we'll limit this dataset for this pourpose.
 
-Here we group our data by date and summarise it to a dataframe with only two columns. Then, we plot it to see the number of occurences by date.
-
 ```{r}
 ac_data %>%  
   group_by(DATA) %>% 
   summarise(QUANT_ACID = sum(CONT_ACID)) %>%
-  ggplot(aes( x=DATA, y =QUANT_ACID))+geom_line() + geom_point()
-```
-```{r}
-ac_data %>%  
-  group_by(DATA) %>% 
-  summarise(QUANT_ACID = sum(CONT_ACID)) %>%
-  ggplot(aes( x=DATA, y =QUANT_ACID))+geom_col()
+  ggplot(aes( x=DATA, y =QUANT_ACID))+geom_col() +
+  geom_point() + 
+  ggtitle("Number of accidents by day / 2016") + 
+  xlab("Date") + ylab("Number of Accidents") +
+  scale_fill_gradient(low="yellow", high="red") +
+  theme_classic()
 ```
 
-###As we can see, there seems to be no correlation between the time of the year and the accidents.
+Although this graph shows a lot, it's better for us to analyse and understand the relations between time of the year and accidents if we look at the number of accidents per month.
 
 ```{r}
 ac_data %>%  
   group_by(MES) %>% 
   summarise(QUANT_ACID = sum(CONT_ACID)) %>%
-  ggplot(aes( x=MES, y =QUANT_ACID))+geom_col(count=12,binwidth = 1)
+  ggplot(aes( x=MES, y =QUANT_ACID))+geom_col() +
+  ggtitle("Number of accidents by month / 2016") + 
+  xlab("Month") + ylab("Number of Accidents") +
+  scale_x_discrete(limit = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"))+
+  theme_classic()
 ```
 
 #### Now, let's analyse to learn how many vehicles are usually involved in the accidents.
@@ -69,36 +67,74 @@ ac_data %>%
 ac_data %>%  
   group_by(AUTO) %>% 
   summarise(QUANT_ACID = sum(CONT_ACID)) %>%
-  ggplot(aes( x=AUTO, y =QUANT_ACID))+geom_col()+theme_minimal()
+  ggplot(aes( x=AUTO, y =QUANT_ACID))+geom_col()+
+  theme_classic() +
+  ggtitle("Number of accidents by number of vehicles involved / 2016") + 
+  xlab("Number of Vehicles") + ylab("Number of Accidents") +
+  scale_x_continuous(breaks = c(0,1,2,3, 4), expand = c(0,0.6)) +
+  scale_y_continuous(breaks = c(0,1000,2000,3000,4000,5000, 6000), expand = c(0,0)) +
+  coord_cartesian(xlim = c(0, 4), ylim=c(0,6000))
 ```
 
-###So we can see from here that most accidents happen envolving 1 or 2 vehicles.
+So we can see from here that most accidents happen envolving 1 or 2 vehicles.
 
-###Now let's see if there is a certain weekday that has more accidents than others
+####Now let's see if there is a certain weekday that has more accidents than others.
 
 ```{r}
-ac_data %>%  
+positions <- c("DOMINGO", "SEGUNDA-FEIRA", "TERCA-FEIRA", "QUARTA-FEIRA", "QUINTA-FEIRA", "SEXTA-FEIRA", "SABADO") 
+ac_data %>% 
   group_by(DIA_SEM) %>% 
   summarise(QUANT_ACID = sum(CONT_ACID)) %>%
-  ggplot(aes( x=DIA_SEM, y=QUANT_ACID))+geom_col()
+  ggplot(aes( x=DIA_SEM, y=QUANT_ACID))+geom_col()+ 
+  theme_classic() +
+  ggtitle("Number of accidents by day of the week / 2016") + 
+  xlab("Day of the week") + ylab("Number of Accidents") +
+  scale_x_discrete(limits= positions, 
+                   labels=c("DOMINGO"="SUNDAY","SEGUNDA-FEIRA"="MONDAY", "TERCA-FEIRA"="TUESDAY", 
+                            "QUARTA-FEIRA" = "WEDNESDAY", "QUINTA-FEIRA" = "THURSDAY", 
+                            "SEXTA-FEIRA" = "FRIDAY", "SABADO" = "SATURDAY"))
 ```
 
-#### From this graph we can certainly observe some interesting things. The first thing that comes to mind is that there are more accidents on Fridays, usually when people go out to party. And the number of accidents on Saturdays and Sundays are low, maybe because people tend to stay at home during those days.
+From this graph we can certainly observe some interesting things. The first thing that comes to mind is that there are more accidents on Fridays, usually when people go out to party. And the number of accidents on Saturdays and Sundays are low, maybe because people tend to stay at home during those days.
+
+#### Another interesting thing to look at is in what days the percentage of fatal accidents is higher.
+
+In this dataset, the fatal accidents are separated into 2 rows: "MORTES" and "MORTE_POST", but the row "FATAIS" shows us the sum of these two rows, with the total number of fatal accidents.
+
+```{r}
+positions <- c("DOMINGO", "SEGUNDA-FEIRA", "TERCA-FEIRA", "QUARTA-FEIRA", "QUINTA-FEIRA", "SEXTA-FEIRA", "SABADO") 
+ac_data %>% 
+  group_by(DIA_SEM) %>% 
+  summarise(QUANT_ACID = sum(CONT_ACID), Prcnt_fatal = sum(FATAIS)/sum(CONT_ACID)*100) %>%
+  ggplot(aes( x=DIA_SEM, y=QUANT_ACID, fill=Prcnt_fatal))+geom_col()+ 
+  scale_fill_gradient(low="yellow", high="red") +
+  theme_classic() +
+  ggtitle("Number of accidents by day of the week / 2016") + 
+  xlab("Day of the week") + ylab("Number of Accidents") +
+  scale_x_discrete(limits= positions, 
+                   labels=c("DOMINGO"="SUNDAY","SEGUNDA-FEIRA"="MONDAY", "TERCA-FEIRA"="TUESDAY", 
+                            "QUARTA-FEIRA" = "WEDNESDAY", "QUINTA-FEIRA" = "THURSDAY", 
+                            "SEXTA-FEIRA" = "FRIDAY", "SABADO" = "SATURDAY")) + 
+  guides(fill = guide_legend(title = "Fatal Percentage", label.position = "left", title.theme=element_text(size=9)))
+```
+
+We conclude with the graph above that even if the number of accidents is lower, the percentage of fatal accidents on weekends is far higher than the percentage in weekdays.
+
 
 #### So, lets see if there are regions in Porto Alegre with more accidents than others. For this, I define "Region" as the column 'REGIAO'.
 
 ```{r}
 ac_data %>%  
+  subset(REGIAO != "NAO IDENTIFICADO") %>%
   group_by(REGIAO) %>% 
   summarise(QUANT_ACID = sum(CONT_ACID)) %>%
-  ggplot(aes( x=REGIAO, y=QUANT_ACID))+geom_col()
+  ggplot(aes( x=REGIAO, y=QUANT_ACID))+geom_col()+
+  theme_classic() +
+  ggtitle("Number of accidents by region / 2016") + 
+  xlab("Region") + ylab("Number of Accidents")
 ```
 
-####Now, this seems to be good enough. One thing i'm concerned, though,it's to see the percentages of the total accidents by region. This might be more interesting.
+So we can see that the region that has the most accidents is the "North" region.
 
-```{r}
-ac_data %>%  
-  group_by(REGIAO) %>% 
-  summarise(PERCNT_ACID = sum(CONT_ACID)/nrow(ac_data) * 100) %>% 
-  ggplot(aes( x=REGIAO, y=PERCNT_ACID))+geom_col()
-```
+With that my analysis of the POA Accidents for 2016 dataset is concluded.
+
