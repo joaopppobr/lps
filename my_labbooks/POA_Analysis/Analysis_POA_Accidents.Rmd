@@ -32,6 +32,10 @@ ac_data <- read_delim(file, ";")
 ac_data
 ```
 
+```{r}
+summary(ac_data)
+```
+
 ####As we see, there is a lot of information here.Though at my first look, I can't seem to find any relevant missing data.
 
 Since for this first analysis we'll be trying to find out if there is a time of the year with more accidents, we'll limit this dataset for this pourpose.
@@ -58,8 +62,13 @@ ac_data %>%
   ggtitle("Number of accidents by month / 2016") + 
   xlab("Month") + ylab("Number of Accidents") +
   scale_x_discrete(limit = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"))+
-  theme_classic()
+  theme_classic() +
+  coord_cartesian(ylim=c(700,1200))
 ```
+
+We can see that in february the number of accidents is lower.
+
+
 
 #### Now, let's analyse to learn how many vehicles are usually involved in the accidents.
 
@@ -76,7 +85,22 @@ ac_data %>%
   coord_cartesian(xlim = c(0, 4), ylim=c(0,6000))
 ```
 
+
 So we can see from here that most accidents happen envolving 1 or 2 vehicles.
+
+```{r}
+ac_data %>%  
+  group_by(AUTO) %>% 
+  summarise(SUM_FATAIS = sum(FATAIS)) %>%
+  ggplot(aes( x=AUTO, y =SUM_FATAIS))+geom_col()+
+  theme_classic() +
+  ggtitle("Number of fatalities by number of vehicles / 2016") + 
+  xlab("Number of Vehicles") + ylab("Number of Fatalities") +
+  scale_x_continuous(breaks = c(0,1,2,3, 4), expand = c(0,0.6)) +
+  scale_y_continuous(expand = c(0,0)) +
+  coord_cartesian(xlim = c(0, 4))
+```
+
 
 ####Now let's see if there is a certain weekday that has more accidents than others.
 
@@ -128,7 +152,7 @@ ac_data %>%
   subset(REGIAO != "NAO IDENTIFICADO") %>%
   group_by(REGIAO) %>% 
   summarise(QUANT_ACID = sum(CONT_ACID)) %>%
-  ggplot(aes( x=REGIAO, y=QUANT_ACID))+geom_col()+
+  ggplot(aes( x=reorder(REGIAO, -QUANT_ACID), y=QUANT_ACID))+geom_col()+
   theme_classic() +
   ggtitle("Number of accidents by region / 2016") + 
   xlab("Region") + ylab("Number of Accidents")
@@ -136,5 +160,19 @@ ac_data %>%
 
 So we can see that the region that has the most accidents is the "North" region.
 
-With that my analysis of the POA Accidents for 2016 dataset is concluded.
+####Now, let's try to visualize the number of accidents by cause and the percentage of fatalities in each one of the causes.
+```{r}
+ac_data %>%  
+  group_by(TIPO_ACID) %>% 
+  summarise(QUANT_ACID = sum(CONT_ACID), Prcnt_fatal = sum(FATAIS)/sum(CONT_ACID)*100)%>%
+  ggplot(aes( x=reorder(TIPO_ACID, -QUANT_ACID), y=QUANT_ACID, fill=Prcnt_fatal))+geom_col()+
+  theme_classic() +
+  scale_fill_gradient(low="yellow", high="red") +
+  ggtitle("Number of accidents by cause") + 
+  xlab("Cause") + ylab("Number of Accidents")
+```
 
+We can see here that the type of accident with more fatalities is "Atropelamento", which stands for "Running Over". Also, the most common accidents are colisions and small colisions.
+
+
+With that my analysis of the POA Accidents for 2016 dataset is concluded.
