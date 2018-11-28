@@ -1,10 +1,10 @@
 ---
-title: 'Test d hypothèse : un exemple (suite)'
+title: 'Test d hypoth??se : un exemple (suite)'
 author: "Lucas Mello Schnorr, Jean-Marc Vincent"
 date: "March 14, 2017"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -12,15 +12,15 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-### Présentation du paradoxe
-À la cour de Florence, de nombreux jeux de société étaient alors pratiqués. Parmi ceux-ci, l’un faisait intervenir la somme des numéros sortis lors du lancer de trois dés. Le Duc de Toscane, qui avait sans doute observé un grand nombre de parties de ce jeu, avait constaté que la somme 10 était obtenue légèrement plus souvent que la somme 9. Le paradoxe, que le Duc avait exposé à Galilée, réside dans le fait qu’il y a autant de façons d’écrire 10 que 9 comme sommes de trois entiers compris entre 1 et 6
+### Pr??sentation du paradoxe
+?? la cour de Florence, de nombreux jeux de soci??t?? ??taient alors pratiqu??s. Parmi ceux-ci, l???un faisait intervenir la somme des num??ros sortis lors du lancer de trois d??s. Le Duc de Toscane, qui avait sans doute observ?? un grand nombre de parties de ce jeu, avait constat?? que la somme 10 ??tait obtenue l??g??rement plus souvent que la somme 9. Le paradoxe, que le Duc avait expos?? ?? Galil??e, r??side dans le fait qu???il y a autant de fa??ons d?????crire 10 que 9 comme sommes de trois entiers compris entre 1 et 6
 
-En effet, il y a 6 manières d'écrire 9 comme somme de 3 dés: 
+En effet, il y a 6 mani??res d'??crire 9 comme somme de 3 d??s: 
         1+2+6, 1+3+5, 1+4+4, 2+2+5, 2+3+4, 3+3+3
-et il y a 6 manières d'écrire 10 : 
+et il y a 6 mani??res d'??crire 10 : 
         1+3+6, 1+4+5, 2+2+6, 2+3+5, 2+4+4, 3+3+4
 
-### Expérimentation 
+### Exp??rimentation 
 Construction de l'environnement de simulation: 
 
 ```{r}
@@ -31,7 +31,7 @@ library(gridExtra);
 ```
 
 
-*générateur de dé à $k$ faces*: les appels successifs à la foncion Dice(faces,n) sont modélisés par une séquence de $n$ d variables aléatoires indépendantes de même loi uniforme dans $\{1,\cdots, faces\}$.
+*g??n??rateur de d?? ?? $k$ faces*: les appels successifs ?? la foncion Dice(faces,n) sont mod??lis??s par une s??quence de $n$ d variables al??atoires ind??pendantes de m??me loi uniforme dans $\{1,\cdots, faces\}$.
 
 ```{r}
 dice <- function(faces = 6, n = 100)
@@ -39,11 +39,11 @@ dice <- function(faces = 6, n = 100)
   sample(x = seq(from = 1, to = faces, by = 1), size=n, replace=TRUE);
 }
 
-# génère 10 tirages d'un dé à 6 faces
+# g??n??re 10 tirages d'un d?? ?? 6 faces
 dice(6,10)
 ```
 
-*Expérience du Duc de Toscane* : on génère un échantillon de $n$ observations de jetés de $3$ dés 
+*Exp??rience du Duc de Toscane* : on g??n??re un ??chantillon de $n$ observations de jet??s de $3$ d??s 
 ```{r}
 experiment <- function (faces = 6, n = 100)
 {
@@ -56,12 +56,12 @@ experiment <- function (faces = 6, n = 100)
              Dice2 = dice2,
              Dice3 = dice3);
 }
-# génère une expérience de 5 tirages de 3 dés à 6 faces
+# g??n??re une exp??rience de 5 tirages de 3 d??s ?? 6 faces
 experiment(6,5)
 ```
 
-### Somme de $3$ dés, répartition
-On génère une expérience et on calcule la somme des $3$ dés :
+### Somme de $3$ d??s, r??partition
+On g??n??re une exp??rience et on calcule la somme des $3$ d??s :
 
 ```{r}
 experiment(6,1000) %>% 
@@ -71,8 +71,8 @@ experiment(6,1000) %>%
 # calcule le nombre d'occurrences de chaque valeur possible de somme
 ```
 
-Visualisation de la distribution empirique des probabilités
-Faire l'essai avec plusieurs tailles d'échantillon, que peut-on remarquer ?
+Visualisation de la distribution empirique des probabilit??s
+Faire l'essai avec plusieurs tailles d'??chantillon, que peut-on remarquer ?
 ```{r}
 Toscane <- function(faces =6, n = 100)
 {
@@ -80,9 +80,9 @@ Toscane <- function(faces =6, n = 100)
     mutate(Sum = Dice1 + Dice2 + Dice3) %>%
     ggplot(aes(x=as.factor(Sum))) +
     geom_bar(aes(y = (..count..)/sum(..count..)), width = .3) +
-    xlab("Valeur de la somme")+ylab ("Fréquence") +
-    ggtitle(paste("Taille de l'échantillon : ",n)) +
-    # à modifier pour adapter et utiliser les facets
+    xlab("Valeur de la somme")+ylab ("Fr??quence") +
+    ggtitle(paste("Taille de l'??chantillon : ",n)) +
+    # ?? modifier pour adapter et utiliser les facets
     ylim (0, 0.15) +
     theme_bw()
 }
@@ -94,7 +94,7 @@ grid.arrange(ncol = 2,grobs=.);
 
 ```
 ### Calcul de l'erreur sur l'estimation
-#### Dépendance de la taille de l'échantillon
+#### D??pendance de la taille de l'??chantillon
 ```{r,fig.height=5}
 
 Toscane_9_10_erreur <-function(faces = 6, n = 471, Confiance = 0.95 )
@@ -112,9 +112,9 @@ Toscane_9_10_erreur <-function(faces = 6, n = 471, Confiance = 0.95 )
     ggplot(aes(x=Freq,xmin=Freq-Erreur,xmax=Freq+Erreur,y=as.factor(Sum))) +
     geom_point()+
     geom_errorbarh(height=.3)+
-    xlab("Fréquence")+ylab ("Val") +
+    xlab("Fr??quence")+ylab ("Val") +
     xlim(0,0.3)+
-    labs(title = paste("Taille de l'échantillon :",n,"Confiance :",Confiance)  )+
+    labs(title = paste("Taille de l'??chantillon :",n,"Confiance :",Confiance)  )+
 #    ylim (, ) +
     theme_bw()
 }
@@ -143,9 +143,9 @@ Toscane_9_10_erreur <-function(faces = 6, n = 1000, Confiance = 0.95 )
     ggplot(aes(x=Freq,xmin=Freq-Erreur,xmax=Freq+Erreur,y=as.factor(Sum))) +
     geom_point()+
     geom_errorbarh(height=.3)+
-    xlab("Fréquence")+ylab ("Val") +
+    xlab("Fr??quence")+ylab ("Val") +
     xlim(0,0.2)+
-    labs(title = paste("Taille de l'échantillon :",n,"Confiance :",Confiance)  )+
+    labs(title = paste("Taille de l'??chantillon :",n,"Confiance :",Confiance)  )+
 #    ylim (, ) +
     theme_bw()
 }
@@ -157,13 +157,13 @@ grid.arrange(ncol = 1,grobs=.);
 
 ```
 
-### Un peu de théorie
+### Un peu de th??orie
 
-Dans le problème du Duc de Toscane, on peut modéliser le problème et calculer les différentes probabilités.
+Dans le probl??me du Duc de Toscane, on peut mod??liser le probl??me et calculer les diff??rentes probabilit??s.
 
-#### Modèle
+#### Mod??le
 
-On modélise le problème en représentant les lancers des 3 dés par 3 variables aléatoires $X_1,X_2,X_3$, indépendantes et  identiquement distribuées sur $\{1,2\cdots,6\}$. C'est à dire que pour 
+On mod??lise le probl??me en repr??sentant les lancers des 3 d??s par 3 variables al??atoires $X_1,X_2,X_3$, ind??pendantes et  identiquement distribu??es sur $\{1,2\cdots,6\}$. C'est ?? dire que pour 
 $0\leq k \leq 6$
 \[
 \mathbb{P}(X_i=k)=\frac 16 \text{ pour } i\in\{1,2,3\} ;
@@ -174,7 +174,7 @@ et que pour $0\leq k_1,k_2,k_3 \leq 6$
 \]
 On obtient ainsi la loi uniforme sur l'ensemble $\{1,2,3,4,5,6\}^3$.
 
-On note $S= X_1+X_2+X_3$ la variable aléatoire représentant la somme des valeurs des 3 dés. Pour cela on peut regarder l'ensemble des triplets choisis dans $\{1,2,3,4,5,6\}^3$ et compter le nombre de triplets de somme $k$ avec $0\leq k\leq 18$.
+On note $S= X_1+X_2+X_3$ la variable al??atoire repr??sentant la somme des valeurs des 3 d??s. Pour cela on peut regarder l'ensemble des triplets choisis dans $\{1,2,3,4,5,6\}^3$ et compter le nombre de triplets de somme $k$ avec $0\leq k\leq 18$.
 
 ```{r}
 faces = 6 ;
@@ -197,14 +197,14 @@ d %>%
 
 ggplot(data=d_theorique, aes(x=as.factor(Sum), y = P)) +
     geom_point(color = "red") +
-    xlab("Valeur de la somme")+ylab ("Probabilité") +
-    ggtitle("Probabilité théorique") +
-    # à modifier pour adapter et utiliser les facets
+    xlab("Valeur de la somme")+ylab ("Probabilit??") +
+    ggtitle("Probabilit?? th??orique") +
+    # ?? modifier pour adapter et utiliser les facets
     ylim (0, NA) +
     theme_bw()
 ```
 
-On reprend les expériences précédentes et on prend les histogrammes pour différentes tailles d'échantillons
+On reprend les exp??riences pr??c??dentes et on prend les histogrammes pour diff??rentes tailles d'??chantillons
 ```{r,fig.height=15}
 Toscane_avec_theorie <- function(faces =6, n = 100)
 {
@@ -213,9 +213,9 @@ Toscane_avec_theorie <- function(faces =6, n = 100)
     ggplot(aes(x=as.factor(Sum))) +
     geom_point(data=d_theorique, aes(x=as.factor(Sum), y = P), shape = 21, colour = "red", fill = "white", size = 2, stroke = 3)+
     geom_bar(aes(y = (..count..)/sum(..count..)), width = .3) +
-    xlab("Valeur de la somme")+ylab ("Fréquence") +
-    ggtitle(paste("Taille de l'échantillon : ",n)) +
-    # à modifier pour adapter et utiliser les facets
+    xlab("Valeur de la somme")+ylab ("Fr??quence") +
+    ggtitle(paste("Taille de l'??chantillon : ",n)) +
+    # ?? modifier pour adapter et utiliser les facets
     ylim (0, NA) +
     theme_bw()
 }
@@ -229,27 +229,27 @@ grid.arrange(ncol = 2,grobs=.)
 
 ### Que peut-on conclure ?
 
-L'erreur méthodologique dans l'énoncé proposé par le Duc de Toscane est de supposer que toute configuration 
-de valeurs de dés, ici un ensemble de 3 dés, a la même probabilité. Dans notre cas on peut calculer toutes les combinaisons (exercice : le faire et en triant avoir le nombre d'ensembles de 3 valeurs et leur somme).
+L'erreur m??thodologique dans l'??nonc?? propos?? par le Duc de Toscane est de supposer que toute configuration 
+de valeurs de d??s, ici un ensemble de 3 d??s, a la m??me probabilit??. Dans notre cas on peut calculer toutes les combinaisons (exercice : le faire et en triant avoir le nombre d'ensembles de 3 valeurs et leur somme).
 
-En fait, les ensembles de 3 valeurs n'ont pas la même probabilité d'apparition:
+En fait, les ensembles de 3 valeurs n'ont pas la m??me probabilit?? d'apparition:
 
-9 comme somme de 3 dés : 1+2+6 (6 triplets), 1+3+5 (6), 1+4+4 (3), 2+2+5 (3), 2+3+4 (6), 3+3+3 (1) 
+9 comme somme de 3 d??s : 1+2+6 (6 triplets), 1+3+5 (6), 1+4+4 (3), 2+2+5 (3), 2+3+4 (6), 3+3+3 (1) 
 
-10 comme somme de 3 dés : 1+3+6 (6), 1+4+5 (6), 2+2+6 (3), 2+3+5 (6), 2+4+4 (3), 3+3+4 (3)
+10 comme somme de 3 d??s : 1+3+6 (6), 1+4+5 (6), 2+2+6 (3), 2+3+5 (6), 2+4+4 (3), 3+3+4 (3)
 
 Par exemple 1+2+6  s'obtient  avec les triplets (1,2,6)  (1,6,2) (2,1,6) (2,6,1) (6,1,2) (6,2,1) 
 
-La probabilité d'observer 9 (respectivement 10) est $p_9= \frac {25}{6^3}=0.1157$ (respectivement $p_{10}= \frac {27}{6^3}=0.1250$). On observe donc que $p_9 < p_{10}$, comme supposé par le Duc de Toscane. La différence de ces deux probabilités est de $\frac 2 {6^3}=0.0093\simeq 1\%$, ce qui est faible. 
+La probabilit?? d'observer 9 (respectivement 10) est $p_9= \frac {25}{6^3}=0.1157$ (respectivement $p_{10}= \frac {27}{6^3}=0.1250$). On observe donc que $p_9 < p_{10}$, comme suppos?? par le Duc de Toscane. La diff??rence de ces deux probabilit??s est de $\frac 2 {6^3}=0.0093\simeq 1\%$, ce qui est faible. 
 
-Le Duc explique sa conviction par l'observation, et certainement le relevé d'un très grand nombre de parties. Or d'après les intervalles de confiance calculés ci-dessus il faut une taille d'échantillon de l'ordre de $100000$ pour avoir un intervalle de confiance autour de chaque valeur estimée qui permette de séparer $p_9$ et $p_10$ avec une confiance de 95%. 
+Le Duc explique sa conviction par l'observation, et certainement le relev?? d'un tr??s grand nombre de parties. Or d'apr??s les intervalles de confiance calcul??s ci-dessus il faut une taille d'??chantillon de l'ordre de $100000$ pour avoir un intervalle de confiance autour de chaque valeur estim??e qui permette de s??parer $p_9$ et $p_10$ avec une confiance de 95%. 
 
-Ayant réalisé autant d'observations, le Duc n'aurait pas manqué d'observer les fluctuations "naturelles" dans les estimateurs des probabilités $P_9$ et $p_10$. 
+Ayant r??alis?? autant d'observations, le Duc n'aurait pas manqu?? d'observer les fluctuations "naturelles" dans les estimateurs des probabilit??s $P_9$ et $p_10$. 
 
-Enfin, il reste à supposer que les dés utilisés lors des 100.000 lancers étaient identiques, non biaisés, et que la  probabilités de chaque face soit $\frac 16$  avec une erreur largement inférieure à $1% (actuellement fabriquer des dés non-biaisés est un problème technologiquement très difficile). 
-Matériellement il était donc très difficile de répondre expérimentalement à cette question. 
+Enfin, il reste ?? supposer que les d??s utilis??s lors des 100.000 lancers ??taient identiques, non biais??s, et que la  probabilit??s de chaque face soit $\frac 16$  avec une erreur largement inf??rieure ?? $1% (actuellement fabriquer des d??s non-biais??s est un probl??me technologiquement tr??s difficile). 
+Mat??riellement il ??tait donc tr??s difficile de r??pondre exp??rimentalement ?? cette question. 
 
-Comment interpréter cette situation ? On peut resituer le contexte, au XVIième siècle, les mathématiciens établissaient leur réputation en se lançant des défis, par exemple  Girolamo Cardano (1501 - 1576) a tenu sa méthode de résolution d'équations de 3ième degré (de la forme $x^3+ax^2+bx+c=0$) secrète afin de pouvoir résoudre des problèmes que d'autres mathématiciens étaient incapable de résoudre (Lire par exemple _La formule secrète - le duel mathématique qui enflamma l'Italie de la Renaissance  de Fabio Toscano, edition Belin 2011_). On pourrait donc penser que le Duc de Toscane défiait Galilée sur le terrain de l'expérimentation, en sachant pertinemment le résultat théorique, n'ayant pas les outils de statistique qui apparaîtront plus tard au XVIII$^\text{ième}$ siècle (loi des erreurs  de Moivre et Laplace) puis au  XVIII$^\text{ième}$ avec Gauss. 
+Comment interpr??ter cette situation ? On peut resituer le contexte, au XVIi??me si??cle, les math??maticiens ??tablissaient leur r??putation en se lan??ant des d??fis, par exemple  Girolamo Cardano (1501 - 1576) a tenu sa m??thode de r??solution d'??quations de 3i??me degr?? (de la forme $x^3+ax^2+bx+c=0$) secr??te afin de pouvoir r??soudre des probl??mes que d'autres math??maticiens ??taient incapable de r??soudre (Lire par exemple _La formule secr??te - le duel math??matique qui enflamma l'Italie de la Renaissance  de Fabio Toscano, edition Belin 2011_). On pourrait donc penser que le Duc de Toscane d??fiait Galil??e sur le terrain de l'exp??rimentation, en sachant pertinemment le r??sultat th??orique, n'ayant pas les outils de statistique qui appara??tront plus tard au XVIII$^\text{i??me}$ si??cle (loi des erreurs  de Moivre et Laplace) puis au  XVIII$^\text{i??me}$ avec Gauss. 
 
-On pourrait également penser que Galilée, utilisant ce paradoxe comme introduction pédagogique, voulait donner  un caractère _aristocratique_ à la question et ainsi donner plus de force à sa  démonstration de l'intérêt du calcul analytique au dépend de l'approche purement expérimentale. Nous laisserons les historiens des sciences débattre de cette question.
+On pourrait ??galement penser que Galil??e, utilisant ce paradoxe comme introduction p??dagogique, voulait donner  un caract??re _aristocratique_ ?? la question et ainsi donner plus de force ?? sa  d??monstration de l'int??r??t du calcul analytique au d??pend de l'approche purement exp??rimentale. Nous laisserons les historiens des sciences d??battre de cette question.
 
