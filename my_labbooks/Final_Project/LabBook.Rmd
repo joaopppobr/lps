@@ -3,9 +3,9 @@ title: "Playing with the UK economics dataset"
 author: "Joao Pedro Oliveira"
 date: "11/9/2018"
 output:
-  word_document: default
-  html_document: default
   pdf_document: default
+  html_document: default
+  word_document: default
 ---
 
 # My LabBook for the LPS 2018/2 Final Project. 
@@ -115,7 +115,7 @@ uk_dataxl_tidy %>%
   guides(colour = guide_legend(title = "Legend"))
 ```
 
-As you can see, the policies of Margaret Thatcher made unemployment lower by a lot, but inflation boosted up inversly. That is the result of Keynesianist policies Thatcher implemented. (But this discussion is not part of this project. Since this is a LabBook, I thought it is nice to bring such things up).
+As you can see, the policies of Margaret Thatcher made inflation lower by a lot, but the unemployment rate boosted up inversly. That is the result of Keynesianist policies Thatcher implemented in her government.. (But this discussion is not part of this project. Since this is a LabBook, I thought it is nice to bring such things up).
 
 Let's take a look now at the Real Wages for the population. Real wages are wages adjusted for inflation, or wages in terms of the amount of goods and services that can be bought.
 
@@ -145,7 +145,22 @@ uk_dataxl_tidy %>%
  annotate("text", x = 2011, y = 655, label = "Global financial crisis of 2008", colour="red")
 ```
 
-As you can see, the UK until 2016 hasn't yet recovered from the 2008 crisis.
+As you can see, the UK until 2016 hasn't yet recovered from the 2008 crisis in terms of wages.
+
+```{r}
+uk_dataxl_tidy %>%
+  subset(Year> 2000) %>%
+   subset(Year < 2017) %>%
+  ggplot(aes(Year)) +
+  geom_line(aes(y = `Unemployment rate`)) +
+  ggtitle("Unemployment rate by year: 2000-2008") + 
+  xlab("Year") + ylab("Unemployment rate (%)") +
+  scale_x_continuous(breaks = c(2000,2001,2002,2003,2004, 2005,2006,2007, 2008,2009,2010, 2011,2012,2013,2014,2015)) +
+   annotate("segment", x = 2008, xend = 2008, y = 3, yend = 9,colour = "red")+
+ annotate("text", x = 2011, y = 9, label = "Global financial crisis of 2008", colour="red")
+```
+
+So, from this graph we can see the same effect, although the UK has recovered better from the crisis when it comes to unemployment.
 
 Lastly, I'll make some calculations of my own. I have the GDP of the UK and the total export values by year. So, I'll calculate the percentage of the UK GDP that consists of exports and try to see if there is any changes that may seem interesting.
 
@@ -155,7 +170,7 @@ uk_dataxl_tidy %>%
    subset(Year < 2017) %>%
   ggplot(aes(Year)) +
   geom_line(aes(y = `Export volumes`, colour="Export volumes")) +
-  geom_line(aes(y = `Real GDP of England at market prices`, colour="GDP of England")) +
+  geom_line(aes(y = `Real UK GDP at market prices, geographically-consistent estimate based on post-1922 borders`, colour="GDP of the UK")) +
   ggtitle("Export volume and GDP per year: 1930-2016") + 
   xlab("Year") + ylab("Millions of Pounds") +
   scale_x_continuous(breaks = c(1930,1940,1950,1960,1970,1980, 1990, 2000, 2010))+
@@ -209,4 +224,3 @@ So, it's interesting to see that somewhere between 1980 there is an interssectio
 That ends my analysis for now.
 
 I could conclude, then, that major historical and political factor directly affected the macroeconomic indicators present in this dataset, those events ranging from war to political discontent, financial crisis and technological development.
-
