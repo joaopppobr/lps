@@ -1,5 +1,5 @@
 ---
-title: "Playing with the UK economics dataset"
+title: "LabBook for the LPS 2018/2 Final Project"
 author: "Joao Pedro Oliveira"
 date: "11/9/2018"
 output:
