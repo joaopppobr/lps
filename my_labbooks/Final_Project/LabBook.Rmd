@@ -3,8 +3,8 @@ title: "Playing with the UK economics dataset"
 author: "Joao Pedro Oliveira"
 date: "11/9/2018"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
   word_document: default
 ---
 

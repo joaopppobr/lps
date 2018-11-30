@@ -1,0 +1,426 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={FinalProject for LPS course 2018/2},
+            pdfauthor={Joao Pedro Oliveira},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{FinalProject for LPS course 2018/2}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Joao Pedro Oliveira}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{11/29/2018}
+
+
+\begin{document}
+\maketitle
+
+\subsection{\texorpdfstring{This is an analysis of the ``Millenium of
+Macroeconomic Data'' dataset, gathered by the Bank of
+England.}{This is an analysis of the Millenium of Macroeconomic Data dataset, gathered by the Bank of England.}}\label{this-is-an-analysis-of-the-millenium-of-macroeconomic-data-dataset-gathered-by-the-bank-of-england.}
+
+\paragraph{\texorpdfstring{This analysis was created following the
+literate programming philosophy and made to be totally reproducible. All
+the data used for analysis was cleaned to become tidy data and all the
+graphs were created using the ``checklist for good graphs'' provided in
+class.}{This analysis was created following the literate programming philosophy and made to be totally reproducible. All the data used for analysis was cleaned to become tidy data and all the graphs were created using the checklist for good graphs provided in class.}}\label{this-analysis-was-created-following-the-literate-programming-philosophy-and-made-to-be-totally-reproducible.-all-the-data-used-for-analysis-was-cleaned-to-become-tidy-data-and-all-the-graphs-were-created-using-the-checklist-for-good-graphs-provided-in-class.}
+
+This part of the analysis is the ``tip of the iceberg'', or the final
+report. The complete and in depht alaysis is avaible at the LabBook for
+this project.
+
+The question that I'm trying to awnser with this dataset is: Can we spot
+the effect of significant historical moments on the data? (Example: WWI,
+WWII, 2008 crisis, etc).
+
+These are the libraries required to reproduce the code for this
+analysis.
+
+The code below is all the data gathering and cleaning needed for the
+project. The data cleaning was made in order to transform once a very
+messy dataset into a tidy data format, that's easier and more precise to
+analyse.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Downloading the file, if it doesn't already exist}
+\NormalTok{file =}\StringTok{ "millenniumofdata_v3_final.xlsx"}
+\ControlFlowTok{if}\NormalTok{(}\OperatorTok{!}\KeywordTok{file.exists}\NormalTok{(file))\{}
+  \KeywordTok{download.file}\NormalTok{(}\StringTok{"https://www.bankofengland.co.uk/-/media/boe/files/statistics/research-datasets/a-millennium-of-macroeconomic-data-for-the-uk.xlsx?la=en&hash=73ABBFB603A709FEEB1FD349B1C61F11527F1DE4"}\NormalTok{, }\DataTypeTok{destfile=}\NormalTok{file)}
+\NormalTok{\}}
+
+\CommentTok{#Reading the xlsx file}
+\NormalTok{uk_dataxl <-}\StringTok{  }\KeywordTok{read_excel}\NormalTok{(file, }\DataTypeTok{sheet=}\StringTok{"A1. Headline series"}\NormalTok{)}
+
+\CommentTok{#Removing useless rows (such as documentation)}
+\NormalTok{uk_dataxl_tidy <-}\StringTok{ }\NormalTok{uk_dataxl[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{),]}
+
+\CommentTok{#Making the "Description" row, the header for the Dataframe (The names for the columns)}
+\KeywordTok{names}\NormalTok{(uk_dataxl_tidy) <-}\StringTok{ }\NormalTok{uk_dataxl_tidy[}\DecValTok{1}\NormalTok{,]}
+
+\CommentTok{#Removing the first row beacuse it just turned into the header (Since it was duplicated)}
+\NormalTok{uk_dataxl_tidy <-}\StringTok{ }\NormalTok{uk_dataxl_tidy[}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{),]}
+
+\CommentTok{#Removing NA's. This limits the data to all the years since 1929.}
+\NormalTok{uk_dataxl_tidy <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(uk_dataxl_tidy)}
+
+\CommentTok{#Removing all the columns with no headers (or that only show changes in percentages from the past year). Since these columns appear in a random way through the dataset, I removed them mannualy.}
+\NormalTok{uk_dataxl_tidy <-}\StringTok{ }\NormalTok{uk_dataxl_tidy[,}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{11}\NormalTok{,}\DecValTok{13}\NormalTok{, }\DecValTok{27}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{55}\NormalTok{, }\DecValTok{62}\NormalTok{, }\DecValTok{64}\NormalTok{, }\DecValTok{66}\NormalTok{, }\DecValTok{68}\NormalTok{,}\DecValTok{69}\NormalTok{, }\DecValTok{73}\NormalTok{,}\DecValTok{75}\NormalTok{,}\DecValTok{74}\NormalTok{,}\DecValTok{77}\NormalTok{)]}
+\NormalTok{uk_dataxl_tidy <-}\StringTok{ }\NormalTok{uk_dataxl_tidy[,}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{26}\NormalTok{, }\DecValTok{38}\NormalTok{, }\DecValTok{52}\NormalTok{, }\DecValTok{56}\NormalTok{, }\DecValTok{58}\NormalTok{, }\DecValTok{61}\NormalTok{, }\DecValTok{63}\NormalTok{, }\DecValTok{65}\NormalTok{)]}
+\NormalTok{uk_dataxl_tidy <-}\StringTok{ }\NormalTok{uk_dataxl_tidy[,}\OperatorTok{-}\KeywordTok{c}\NormalTok{(}\DecValTok{17}\NormalTok{)]}
+
+\CommentTok{#Transforming all the columns on the dataframe to Numeric values, as oposed to Chr. This is needed for every step of the analysis.}
+\NormalTok{uk_dataxl_tidy[] <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(uk_dataxl_tidy, }\ControlFlowTok{function}\NormalTok{(x) \{}
+    \KeywordTok{as.numeric}\NormalTok{(x)}
+\NormalTok{\})}
+
+\CommentTok{#Renaming columns (Year and Population, for simplicity)}
+\NormalTok{uk_dataxl_tidy <-}\StringTok{ }\KeywordTok{rename}\NormalTok{(uk_dataxl_tidy, }\KeywordTok{c}\NormalTok{(}\StringTok{"Description"}\NormalTok{ =}\StringTok{ "Year"}\NormalTok{, }\StringTok{"Population (GB+NI)"}\NormalTok{ =}\StringTok{ "Population"}\NormalTok{))}
+\NormalTok{uk_dataxl_tidy}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 88 x 56
+##     Year `Real GDP of En~ `Real GDP of En~ `Real UK GDP at~
+##    <dbl>            <dbl>            <dbl>            <dbl>
+##  1  1929          215534.          182494.          245205.
+##  2  1930          213608.          180903.          243254.
+##  3  1931          202987.          171948.          231969.
+##  4  1932          203872.          172808.          232128.
+##  5  1933          210588.          178615.          239510.
+##  6  1934          223656.          189820.          253801.
+##  7  1935          231881.          196928.          263187.
+##  8  1936          243283.          206743.          275737.
+##  9  1937          251717.          214047.          285387.
+## 10  1938          253383.          215602.          287602.
+## # ... with 78 more rows, and 52 more variables: `Real UK GDP at factor
+## #   cost, geographically-consistent estimate based on post-1922
+## #   borders` <dbl>, `Index of real UK GDP at factor cost - based on
+## #   changing political boundaries,` <dbl>, `Composite estimate of English
+## #   and (geographically-consistent) UK real GDP at factor cost` <dbl>,
+## #   `HP-filter of log of real composite estimate of English and UK real
+## #   GDP at factor cost` <dbl>, `Real UK gross disposable national income
+## #   at market prices, constant border estimate` <dbl>, `Real
+## #   consumption` <dbl>, `Real investment` <dbl>, `Stockbuilding
+## #   contribution` <dbl>, `Real government consumption of goods and
+## #   services` <dbl>, `Export volumes` <dbl>, `Import volumes` <dbl>,
+## #   `Nominal GDP of England at market prices` <dbl>, `Nominal UK GDP at
+## #   market prices` <dbl>, Population <dbl>, `Population (England)` <dbl>,
+## #   `Unemployment rate` <dbl>, `Average weekly hours worked` <dbl>,
+## #   `Capital Services, whole economy` <dbl>, `TFP growth` <dbl>, `Labour
+## #   productivity` <dbl>, `Labour share, whole economy excluding
+## #   rents` <dbl>, `GDP deflator at market prices` <dbl>, `Export
+## #   prices` <dbl>, `Import prices` <dbl>, `Terms of Trade` <dbl>, `$ Oil
+## #   prices` <dbl>, `Consumer price index` <dbl>, `Consumer price
+## #   inflation` <dbl>, `Real consumption wages` <dbl>, `Wholesale/producer
+## #   price index` <dbl>, `Bank Rate` <dbl>, `10 year/medium-term government
+## #   bond yields` <dbl>, `Consols / long-term government bond
+## #   yields` <dbl>, `Mortgage rates` <dbl>, `Corporate borrowing rate from
+## #   banks` <dbl>, `Corporate bond yields` <dbl>, `Share prices` <dbl>,
+## #   `$/\u00a3 exchange rate` <dbl>, `Real $/\u00a3 exchange rate` <dbl>,
+## #   `Real ERI` <dbl>, `House price index` <dbl>, Credit <dbl>, `Secured
+## #   credit` <dbl>, `Bank of England Balance sheet` <dbl>, `Notes and coin
+## #   in circulation` <dbl>, M1 <dbl>, `Public sector Total Managed
+## #   Expenditure` <dbl>, `Public Sector Net Lending(+)/Borrowing(-)` <dbl>,
+## #   `Central Government Gross Debt` <dbl>, `Trade deficit` <dbl>, `Current
+## #   account` <dbl>, `Current account deficit including estimated
+## #   non-monetary bullion flows` <dbl>
+\end{verbatim}
+
+For the first graph: notice that if you take a look into the period of
+WWII, the unemployment rate almost reached 0\%. That might be explained
+because many people were working for the government and military to win
+the war. As as you can see, this unemployment rate rose a lot very
+quickly when the war ended, because many of the people once employed
+because of the war were now out of a job.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{uk_dataxl_tidy }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{subset}\NormalTok{(Year}\OperatorTok{>}\StringTok{ }\DecValTok{1930}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{   }\KeywordTok{subset}\NormalTok{(Year }\OperatorTok{<}\StringTok{ }\DecValTok{1970}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(Year)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \StringTok{`}\DataTypeTok{Unemployment rate}\StringTok{`}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Unemployment rate by year: 1930-1970"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Year"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Unemployment rate (%)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{c}\NormalTok{(}\DecValTok{1930}\NormalTok{,}\DecValTok{1935}\NormalTok{,}\DecValTok{1940}\NormalTok{,}\DecValTok{1945}\NormalTok{,}\DecValTok{1950}\NormalTok{,}\DecValTok{1955}\NormalTok{,}\DecValTok{1960}\NormalTok{, }\DecValTok{1965}\NormalTok{,}\DecValTok{1970}\NormalTok{)) }\OperatorTok{+}
+\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\StringTok{"rect"}\NormalTok{, }\DataTypeTok{xmin =} \DecValTok{1939}\NormalTok{, }\DataTypeTok{xmax =} \DecValTok{1945}\NormalTok{, }\DataTypeTok{ymin =} \DecValTok{0}\NormalTok{, }\DataTypeTok{ymax =} \FloatTok{9.68}\NormalTok{, }\DataTypeTok{alpha =}\NormalTok{ .}\DecValTok{2}\NormalTok{) }\OperatorTok{+}
+\KeywordTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\DataTypeTok{x =} \DecValTok{1942}\NormalTok{, }\DataTypeTok{y =} \DecValTok{10}\NormalTok{, }\DataTypeTok{label =} \StringTok{"WWII"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{FinalReport_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+Now, I calculated the percentage of the UK GDP that consists of exports,
+and tried to look for some indicators of any historical moments.
+
+First, I plot two graphs togheter and then the percentage.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{uk_dataxl_tidy }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{subset}\NormalTok{(Year}\OperatorTok{>}\StringTok{ }\DecValTok{1929}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{   }\KeywordTok{subset}\NormalTok{(Year }\OperatorTok{<}\StringTok{ }\DecValTok{2017}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(Year)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \StringTok{`}\DataTypeTok{Export volumes}\StringTok{`}\NormalTok{, }\DataTypeTok{colour=}\StringTok{"Export volumes"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \StringTok{`}\DataTypeTok{Real UK GDP at market prices, geographically-consistent estimate based on post-1922 borders}\StringTok{`}\NormalTok{, }\DataTypeTok{colour=}\StringTok{"GDP of the UK"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Export volume and GDP per year: 1930-2016"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Year"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Millions of Pounds"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{c}\NormalTok{(}\DecValTok{1930}\NormalTok{,}\DecValTok{1940}\NormalTok{,}\DecValTok{1950}\NormalTok{,}\DecValTok{1960}\NormalTok{,}\DecValTok{1970}\NormalTok{,}\DecValTok{1980}\NormalTok{, }\DecValTok{1990}\NormalTok{, }\DecValTok{2000}\NormalTok{, }\DecValTok{2010}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{colour =} \KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Legend"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{FinalReport_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+There we can see again a great change in the WWII period, similar to the
+previous Unemployment graph.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{uk_dataxl_tidy }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{subset}\NormalTok{(Year}\OperatorTok{>}\StringTok{ }\DecValTok{1929}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{   }\KeywordTok{subset}\NormalTok{(Year }\OperatorTok{<}\StringTok{ }\DecValTok{2017}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(Year)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \StringTok{`}\DataTypeTok{Export volumes}\StringTok{`}\OperatorTok{/}\StringTok{`}\DataTypeTok{Real UK GDP at market prices, geographically-consistent estimate based on post-1922 borders}\StringTok{`}\OperatorTok{*}\DecValTok{100}\NormalTok{))}\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Percentage of GDP composed of exports by year: 1930-2016"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Year"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Percentage of GDP composed of exports (%)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{c}\NormalTok{(}\DecValTok{1930}\NormalTok{,}\DecValTok{1935}\NormalTok{,}\DecValTok{1940}\NormalTok{,}\DecValTok{1945}\NormalTok{,}\DecValTok{1950}\NormalTok{,}\DecValTok{1955}\NormalTok{,}\DecValTok{1960}\NormalTok{,}\DecValTok{1965}\NormalTok{,}\DecValTok{1970}\NormalTok{, }\DecValTok{1975}\NormalTok{, }\DecValTok{1980}\NormalTok{, }\DecValTok{1985}\NormalTok{, }\DecValTok{1990}\NormalTok{, }\DecValTok{1995}\NormalTok{, }\DecValTok{2000}\NormalTok{, }\DecValTok{2005}\NormalTok{, }\DecValTok{2010}\NormalTok{, }\DecValTok{2015}\NormalTok{))}\OperatorTok{+}
+\StringTok{   }\KeywordTok{annotate}\NormalTok{(}\StringTok{"rect"}\NormalTok{, }\DataTypeTok{xmin =} \DecValTok{1939}\NormalTok{, }\DataTypeTok{xmax =} \DecValTok{1945}\NormalTok{, }\DataTypeTok{ymin =} \DecValTok{0}\NormalTok{, }\DataTypeTok{ymax =} \DecValTok{20}\NormalTok{, }\DataTypeTok{alpha =}\NormalTok{ .}\DecValTok{2}\NormalTok{) }\OperatorTok{+}
+\KeywordTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\DataTypeTok{x =} \DecValTok{1942}\NormalTok{, }\DataTypeTok{y =} \DecValTok{21}\NormalTok{, }\DataTypeTok{label =} \StringTok{"WWII"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{FinalReport_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+Another interesting time in the UK that can be noticed from these
+indicators is what was called ``The Winter of Discontent''. This was the
+winter from 1978 to 1979, when major political strikes occured because
+of high inflation and high unemployment. This winter helped get Margaret
+Thatcher elected Prime Minister of the UK. Here is a look into the
+economic indicators of that period.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{uk_dataxl_tidy }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{subset}\NormalTok{(Year}\OperatorTok{>}\StringTok{ }\DecValTok{1969}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{   }\KeywordTok{subset}\NormalTok{(Year }\OperatorTok{<}\StringTok{ }\DecValTok{1986}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(Year)) }\OperatorTok{+}
+\StringTok{  }\CommentTok{#Multiplying the rate by two since the scale will be half the range. By doing this, the scale is correct}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \StringTok{`}\DataTypeTok{Unemployment rate}\StringTok{`}\OperatorTok{*}\DecValTok{2}\NormalTok{, }\DataTypeTok{colour=}\StringTok{"Unemployment Rate"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \StringTok{`}\DataTypeTok{Consumer price inflation}\StringTok{`}\NormalTok{, }\DataTypeTok{colour =} \StringTok{"Inflation"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\CommentTok{#Here, inserting the second axis and making a scale transformation for the graphs to match the range}
+\StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{sec.axis =} \KeywordTok{sec_axis}\NormalTok{(}\OperatorTok{~}\NormalTok{.}\OperatorTok{*}\FloatTok{0.5}\NormalTok{, }\DataTypeTok{name =} \StringTok{"Unemployment Rate (%)"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Inflation and unemployment rate by year: 1970-1985"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Year"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Inflation (%)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{c}\NormalTok{(}\DecValTok{1971}\NormalTok{,}\DecValTok{1973}\NormalTok{,}\DecValTok{1975}\NormalTok{,}\DecValTok{1977}\NormalTok{,}\DecValTok{1979}\NormalTok{, }\DecValTok{1981}\NormalTok{, }\DecValTok{1983}\NormalTok{,}\DecValTok{1985}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\CommentTok{#Highlighting the period that i'm trying to visualize}
+\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\StringTok{"rect"}\NormalTok{, }\DataTypeTok{xmin =} \DecValTok{1978}\NormalTok{, }\DataTypeTok{xmax =} \DecValTok{1979}\NormalTok{, }\DataTypeTok{ymin =} \DecValTok{0}\NormalTok{, }\DataTypeTok{ymax =} \DecValTok{30}\NormalTok{, }\DataTypeTok{alpha =}\NormalTok{ .}\DecValTok{2}\NormalTok{)}\OperatorTok{+}
+\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\DataTypeTok{x =} \DecValTok{1982}\NormalTok{, }\DataTypeTok{y =} \DecValTok{27}\NormalTok{, }\DataTypeTok{label =} \StringTok{"Winter of Discontent"}\NormalTok{)}\OperatorTok{+}
+\StringTok{ }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{colour =} \KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Legend"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{FinalReport_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+As you can see, the policies of Margaret Thatcher made inflation lower
+by a lot, but the unemployment rate boosted up inversly. That is the
+result of Keynesianist policies Thatcher implemented in her government,
+that were proven later to have this effect on the economy.
+
+Another historical period that is very visible from the data is the 2008
+Global Financial Crisis, and there are many ways to visualize it using
+plots. I chose again the unemployment rate and the real consumption
+wages. Real wages are wages adjusted for inflation, or wages in terms of
+the amount of goods and services that can be bought. It's a good
+indicator to see the buying power of the population in a certain period
+of time.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{uk_dataxl_tidy }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{subset}\NormalTok{(Year}\OperatorTok{>}\StringTok{ }\DecValTok{2000}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{   }\KeywordTok{subset}\NormalTok{(Year }\OperatorTok{<}\StringTok{ }\DecValTok{2017}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(Year)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \StringTok{`}\DataTypeTok{Real consumption wages}\StringTok{`}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Real wages by year: 2000-2016"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Year"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Real consumption wages"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{c}\NormalTok{(}\DecValTok{2000}\NormalTok{,}\DecValTok{2001}\NormalTok{,}\DecValTok{2002}\NormalTok{,}\DecValTok{2003}\NormalTok{,}\DecValTok{2004}\NormalTok{, }\DecValTok{2005}\NormalTok{,}\DecValTok{2006}\NormalTok{,}\DecValTok{2007}\NormalTok{, }\DecValTok{2008}\NormalTok{,}\DecValTok{2009}\NormalTok{,}\DecValTok{2010}\NormalTok{, }\DecValTok{2011}\NormalTok{,}\DecValTok{2012}\NormalTok{,}\DecValTok{2013}\NormalTok{,}\DecValTok{2014}\NormalTok{,}\DecValTok{2015}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{annotate}\NormalTok{(}\StringTok{"segment"}\NormalTok{, }\DataTypeTok{x =} \DecValTok{2008}\NormalTok{, }\DataTypeTok{xend =} \DecValTok{2008}\NormalTok{, }\DataTypeTok{y =} \DecValTok{550}\NormalTok{, }\DataTypeTok{yend =} \DecValTok{660}\NormalTok{,}\DataTypeTok{colour =} \StringTok{"red"}\NormalTok{)}\OperatorTok{+}
+\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\DataTypeTok{x =} \DecValTok{2011}\NormalTok{, }\DataTypeTok{y =} \DecValTok{655}\NormalTok{, }\DataTypeTok{label =} \StringTok{"Global financial crisis of 2008"}\NormalTok{, }\DataTypeTok{colour=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{FinalReport_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+As it is clear, the wages in the UK haven't yet recovered from the 2008
+financial crisis. Now, let's look at unemployment.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{uk_dataxl_tidy }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{subset}\NormalTok{(Year}\OperatorTok{>}\StringTok{ }\DecValTok{2000}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{   }\KeywordTok{subset}\NormalTok{(Year }\OperatorTok{<}\StringTok{ }\DecValTok{2017}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(Year)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \StringTok{`}\DataTypeTok{Unemployment rate}\StringTok{`}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Unemployment rate by year: 2000-2008"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Year"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Unemployment rate (%)"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{c}\NormalTok{(}\DecValTok{2000}\NormalTok{,}\DecValTok{2001}\NormalTok{,}\DecValTok{2002}\NormalTok{,}\DecValTok{2003}\NormalTok{,}\DecValTok{2004}\NormalTok{, }\DecValTok{2005}\NormalTok{,}\DecValTok{2006}\NormalTok{,}\DecValTok{2007}\NormalTok{, }\DecValTok{2008}\NormalTok{,}\DecValTok{2009}\NormalTok{,}\DecValTok{2010}\NormalTok{, }\DecValTok{2011}\NormalTok{,}\DecValTok{2012}\NormalTok{,}\DecValTok{2013}\NormalTok{,}\DecValTok{2014}\NormalTok{,}\DecValTok{2015}\NormalTok{)) }\OperatorTok{+}
+\StringTok{   }\KeywordTok{annotate}\NormalTok{(}\StringTok{"segment"}\NormalTok{, }\DataTypeTok{x =} \DecValTok{2008}\NormalTok{, }\DataTypeTok{xend =} \DecValTok{2008}\NormalTok{, }\DataTypeTok{y =} \DecValTok{3}\NormalTok{, }\DataTypeTok{yend =} \DecValTok{9}\NormalTok{,}\DataTypeTok{colour =} \StringTok{"red"}\NormalTok{)}\OperatorTok{+}
+\StringTok{ }\KeywordTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\DataTypeTok{x =} \DecValTok{2011}\NormalTok{, }\DataTypeTok{y =} \DecValTok{9}\NormalTok{, }\DataTypeTok{label =} \StringTok{"Global financial crisis of 2008"}\NormalTok{, }\DataTypeTok{colour=}\StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{FinalReport_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+One of the most interesting things that can be discovered through this
+dataset too is the comparison between hours worked per week and
+productivity growth. In this comparison it's clear to see the
+introduction of the computer and automated labour, leading to people
+working less hours per day but having a lot more productivity.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{uk_dataxl_tidy }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{subset}\NormalTok{(Year}\OperatorTok{>}\StringTok{ }\DecValTok{1949}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{   }\KeywordTok{subset}\NormalTok{(Year }\OperatorTok{<}\StringTok{ }\DecValTok{2017}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(Year)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \StringTok{`}\DataTypeTok{Labour productivity}\StringTok{`}\NormalTok{, }\DataTypeTok{colour=}\StringTok{"Labour productivity"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \StringTok{`}\DataTypeTok{Average weekly hours worked}\StringTok{`}\OperatorTok{*}\DecValTok{2}\NormalTok{, }\DataTypeTok{colour=}\StringTok{"Average weekly hours worked"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"Average weekly hours worked and labour productivity: 1950-2016"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{sec.axis =} \KeywordTok{sec_axis}\NormalTok{(}\OperatorTok{~}\NormalTok{.}\OperatorTok{*}\FloatTok{0.5}\NormalTok{, }\DataTypeTok{name =} \StringTok{"Hours"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"Year"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{ylab}\NormalTok{(}\StringTok{"Real GDP per head"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{breaks =} \KeywordTok{c}\NormalTok{(}\DecValTok{1950}\NormalTok{,}\DecValTok{1960}\NormalTok{,}\DecValTok{1970}\NormalTok{, }\DecValTok{1980}\NormalTok{, }\DecValTok{1990}\NormalTok{, }\DecValTok{2000}\NormalTok{, }\DecValTok{2010}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{colour =} \KeywordTok{guide_legend}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Legend"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{annotate}\NormalTok{(}\StringTok{"segment"}\NormalTok{, }\DataTypeTok{x =} \DecValTok{1981}\NormalTok{, }\DataTypeTok{xend =} \DecValTok{1981}\NormalTok{, }\DataTypeTok{y =} \DecValTok{40}\NormalTok{, }\DataTypeTok{yend =} \DecValTok{100}\NormalTok{,}\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\DataTypeTok{x =} \DecValTok{1970}\NormalTok{, }\DataTypeTok{y =} \DecValTok{102}\NormalTok{, }\DataTypeTok{label =} \StringTok{"MS-DOS release"}\NormalTok{, }\DataTypeTok{colour=}\StringTok{"black"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{FinalReport_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+Of course it wasn't only the MS-DOS release that led to this sudden
+change of the economy, but it is a nice way to view how technology has
+changed the way we work.
+
+And that concludes my Report for the final project of the Literate
+Programming and Statistics course.
+
+-Joao Pedro Oliveira
+
+
+\end{document}
